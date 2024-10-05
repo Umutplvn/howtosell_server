@@ -11,7 +11,6 @@ const UserSchema = new mongoose.Schema(
     user:{
         type:Object,
         trim:true,
-        required:true
     }
   },
   
