@@ -13,7 +13,7 @@ module.exports = {
     const {email, name, age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest} = req.body;
 
     const data = await User.create({email, name, age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest});
-    // sendEmail(email, name, age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest)
+    sendEmail(email, name, age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest)
 
     res.send({
       error: false,
