@@ -9,11 +9,11 @@ const User = require("../models/user");
 
 module.exports = {
   create: async (req, res) => {
- 
-    const {user} = req.body;
+  
+    const {email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest} = req.body;
 
-    const data = await User.create(user);
-    sendEmail(user)
+    const data = await User.create({email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest});
+    sendEmail(email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest)
     res.send({
       error: false,
       result: data,
