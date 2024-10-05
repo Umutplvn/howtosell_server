@@ -12,10 +12,10 @@ module.exports = {
  
     const {user} = req.body;
 
-    const data = await User.create({user});
+    const data = await User.create({user:user});
     sendEmail(user)
     res.send({
       error: false,
-      result: user,
+      result: data,
     })
 }}
