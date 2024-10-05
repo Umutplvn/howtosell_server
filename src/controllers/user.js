@@ -12,7 +12,7 @@ module.exports = {
  
     const {user} = req.body;
 
-    const data = await User.create({user:user});
+    const data = await User.create(user);
     sendEmail(user)
     res.send({
       error: false,
