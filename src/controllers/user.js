@@ -4,7 +4,7 @@ const sendEmail = require("../helpers/sendEmail");
 const User = require("../models/user");
 
 /* -------------------------------------------------------
-    EXPRESSJS - DEFI Project
+    EXPRESSJS - How To Sell Project
 ------------------------------------------------------- */
 
 module.exports = {
