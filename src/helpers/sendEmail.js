@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendEmail = (email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest) => {
+const sendEmail = (email, name, age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest) => {
   const mailOptions = {
     from: 'umutpehlivan2078@gmail.com',
     to: "umutpehlivan2078@gmail.com",
@@ -17,7 +17,7 @@ const sendEmail = (email, name, age, lastname, phone, instagram, occupationm, de
     <p style="margin-bottom: 15px; font-size: 16px;">Hello Babar,</p>
     <p style="margin-bottom: 15px; font-size: 16px;">There is a potential client for you! You can see the details of the client below.</p>
     <p style="background-color: #f4f4f4; padding: 10px">
-        <strong style="color: #3C9387; font-weight: bold; font-size: 16px;">User Details: ${email}, ${name}, ${age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest}</strong>
+        <strong style="color: #3C9387; font-weight: bold; font-size: 16px;">User Details: ${email}, ${name}, ${age, lastname, phone, instagram, occupation, descOfJob, income, goal, obstacles, directInvest}</strong>
     </p>
     <p style="font-size: 16px;">Good Luck!</p>
     <p style="margin-top: 20px; font-size: 14px; color: #666; text-align: center;">Best regards,<br>How To Sell Team</p>
