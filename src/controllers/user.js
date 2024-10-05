@@ -10,7 +10,7 @@ const User = require("../models/user");
 module.exports = {
   create: async (req, res) => {
   
-    const {email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest} = req.body;
+    const {email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest} = req.body.user;
 
     const data = await User.create({email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest});
     sendEmail(email, name, age, lastname, phone, instagram, occupationm, descOfJob, income, goal, obstacles, directInvest)
