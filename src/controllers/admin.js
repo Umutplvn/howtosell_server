@@ -11,16 +11,19 @@ module.exports = {
   create: async (req, res) => {
   
     const {name, email, password} = req.body;
-    const userEmail = await Admin.findOne({ email, password });
-
-    if (userEmail) {
-        res
-          .status(400)
-          .send({ error: true, message: "The email address is already in use." });
+    const user = await Admin.findOne({ email });
+    if ( !name || !email || !password) {
+      res.status(400).send({ error: true, message: "Please fill the required credentials." });
+      return;
+    }
+ 
+    if (user) {
+        res.status(400).send({ error: true, message: "The email address is already in use." });
         return;
       }
 
-      const newUser = await Admin.create({name, email, password});
+   
+      const newUser = await Admin.create({name, email, password:passwordEncrypt(password)});
       const tokenData = "Token " + passwordEncrypt(newUser._id + `${new Date()}`);
       await Token.create({ userId: newUser._id, token: tokenData });
 
@@ -35,12 +38,12 @@ module.exports = {
 
 update: async (req, res) => {
     const updateData = req.body;
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: req.params.userId },
+
+    const updatedUser = await Admin.findOneAndUpdate(
+      { _id: req.user },
       updateData,
       { new: true, runValidators: true }
     );
-
     res.status(202).send({
       error: false,
       result: updatedUser,
@@ -52,19 +55,19 @@ update: async (req, res) => {
   updatePassword: async (req, res) => {
     const password = req.body.password;
 
-    await User.updateOne(
+    await Admin.updateOne(
       { _id: req.user },
-      { password: password },
+      { password: passwordEncrypt(password) },
       {
         runValidators: true,
       }
     );
-    const newData = await User.findOne({ _id: req.user });
-
+    
+    const newData = await Admin.findOne({ _id: req.user });
     res.status(202).send({
       error: false,
       message: "Password has changed successfully.",
-      result: newData,
+      newData
     });
   },
 

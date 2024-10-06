@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     goal: { type: String, trim:true },
     obstacles: { type: String, trim:true },
     directInvest: { type: String, trim:true },
-});
+
+}, {collection:'user', timestamps:true});
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

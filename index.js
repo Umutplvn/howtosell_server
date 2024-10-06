@@ -43,7 +43,8 @@ app.all('/', (req, res)=>{
 /*--------------------------------------*/
 //! Routes:
 app.use(require('./src/root/user'))
-app.use(require('./src/root/admin'))
+app.use('/control/admin', require('./src/root/admin'))
+app.use('/control/auth', require('./src/root/auth'))
 /*--------------------------------------*/
 //! errorHandler:
 app.use(require('./src/errorHandler'))
