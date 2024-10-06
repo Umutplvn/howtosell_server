@@ -16,7 +16,7 @@ const sendEmail = (email, name, age, lastname, phone, instagram, occupation, des
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; border-radius: 10px; border: 1px solid #ced4da;">
         <p style="margin-bottom: 15px; font-size: 16px;">Hello Babar,</p>
-        <p style="margin-bottom: 15px; font-size: 16px;">There is a potential client for you! You can see the details of the client below.</p>
+        <p style="margin-bottom: 15px; font-size: 16px;">  There is a potential client for you! Please find their details below.</p>
 
         ${age ? `<p style="margin-bottom: 10px; font-size: 16px;"><strong>• How old are you?</strong><br>${age}</p>` : ''}
 
