@@ -20,6 +20,16 @@ app.use(require('cors')())
 require('./src/configs/dbConnection')
 
 /*--------------------------------------*/
+
+//! Authorization Middleware
+app.use(require("./src/middlewares/authorization"));
+
+/*--------------------------------------*/
+//! Searching&Sorting&Pagination:
+app.use('/control/admin', require("./src/middlewares/findSearchSortPage"));
+
+/*--------------------------------------*/
+
 //! Home Page
 
 app.all('/', (req, res)=>{

@@ -1,6 +1,7 @@
 "use strict";
 
 const Admin = require("../models/admin");
+const Token=require('../models/token')
 const passwordEncrypt=require('../helpers/passwordEncrypt')
 /* -------------------------------------------------------
     EXPRESSJS - How To Sell Project
@@ -21,7 +22,7 @@ module.exports = {
 
       const newUser = await Admin.create({name, email, password});
       const tokenData = "Token " + passwordEncrypt(newUser._id + `${new Date()}`);
-    //   await Token.create({ userId: newUser._id, token: tokenData });
+      await Token.create({ userId: newUser._id, token: tokenData });
 
     res.send({
       error: false,
