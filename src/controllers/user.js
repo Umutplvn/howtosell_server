@@ -19,4 +19,51 @@ module.exports = {
       error: false,
       result: data,
     })
-}}
+},
+
+update:async(req,res)=>{
+// "userId":"670200baf6351da6f0ba538a",
+// "updateData":{"name":"deneme"}}
+
+  const {updateData, userId} = req.body;
+  console.log('Incoming update data:', updateData);
+  console.log('User ID:', userId);
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: userId },
+    updateData,
+    { new: true, runValidators: true }
+  );
+  res.status(202).send({
+    error: false,
+    result: updatedUser,
+  });
+},
+
+
+delete: async (req, res) => {
+  const { userId } = req.body;
+  const data = await User.deleteOne({ _id: userId });
+ 
+  if (data.deletedCount >= 1) {
+    res.send({
+      message: "Successfully deleted",
+    });
+  } else {
+    res.send({
+      message: "There is no recording to be deleted.",
+    });
+  }
+},
+
+list: async (req, res) => {
+  const data = await req.getModelList(User);
+ 
+  res.status(200).send({
+    error: false,
+    count: data.length,
+    result: data
+  });
+},
+
+
+}

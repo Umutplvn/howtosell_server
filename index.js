@@ -26,7 +26,7 @@ app.use(require("./src/middlewares/authorization"));
 
 /*--------------------------------------*/
 //! Searching&Sorting&Pagination:
-app.use('/control/admin', require("./src/middlewares/findSearchSortPage"));
+app.use(require("./src/middlewares/findSearchSortPage"));
 
 /*--------------------------------------*/
 
@@ -42,7 +42,7 @@ app.all('/', (req, res)=>{
 
 /*--------------------------------------*/
 //! Routes:
-app.use(require('./src/root/user'))
+app.use('/user', require('./src/root/user'))
 app.use('/control/admin', require('./src/root/admin'))
 app.use('/control/auth', require('./src/root/auth'))
 /*--------------------------------------*/
