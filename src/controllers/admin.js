@@ -61,7 +61,7 @@ module.exports = {
     const { updateData, userId } = req.body;
     const user = req.user;
     const isAdmin = await Admin.findOne({ _id: user });
-    console.log(isAdmin.owner);
+
     if (isAdmin.owner) {
       const updatedUser = await Admin.findOneAndUpdate(
         { _id: userId },
@@ -160,11 +160,21 @@ module.exports = {
 
   list: async (req, res) => {
     const data = await req.getModelList(Admin);
+    const user = req.user;
+    const isAdmin = await Admin.findOne({ _id: user });
 
-    res.status(200).send({
-      error: false,
-      count: data.length,
-      result: data,
-    });
+    if(isAdmin.owner){
+      res.status(200).send({
+        error: false,
+        count: data.length,
+        result: data,
+      });
+    }else{
+      res.status(200).send({
+        error: false,
+        result: "You have no authorization to see this page.",
+      });
+    }
+
   },
 };

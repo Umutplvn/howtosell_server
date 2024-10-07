@@ -2,6 +2,7 @@
 
 const sendEmail = require("../helpers/sendEmail");
 const User = require("../models/user");
+const Admin = require("../models/admin");
 
 /* -------------------------------------------------------
     EXPRESSJS - How To Sell Project
@@ -57,12 +58,22 @@ delete: async (req, res) => {
 
 list: async (req, res) => {
   const data = await req.getModelList(User);
+  const user = req.user;
+  const isAdmin = await Admin.findOne({ _id: user });
+
+  if(isAdmin.authorization){
+    res.status(200).send({
+      error: false,
+      count: data.length,
+      result: data
+    });
+  }else{
+    res.status(200).send({
+      error: false,
+     result:"You have no authorization to see this page!"
+    });
+  }
  
-  res.status(200).send({
-    error: false,
-    count: data.length,
-    result: data
-  });
 },
 
 
