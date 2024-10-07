@@ -14,7 +14,7 @@ module.exports = {
     let passcode = Math.floor(Math.random() * 100000) + 2000;
     const { name, email, password } = req.body;
     const user = await Admin.findOne({ email });
-    const upName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    const upName = name?.charAt(0).toUpperCase() + name?.slice(1).toLowerCase();
 
     if (!name || !email || !password) {
       res
