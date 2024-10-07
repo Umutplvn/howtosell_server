@@ -4,9 +4,10 @@ const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: 'howtosell.leads@gmail.com', 
-    PASSWORD: process.env.PASSWORD 
+    pass: process.env.pass 
   }
 });
+
 
 const sendVerificationEmail = (email, passcode, name) => {
   const mailOptions = {
