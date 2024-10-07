@@ -1,56 +1,84 @@
 "use strict";
 
 const Admin = require("../models/admin");
-const Token=require('../models/token')
-const passwordEncrypt=require('../helpers/passwordEncrypt')
+const Token = require("../models/token");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
+const sendVerificationEmail = require("../helpers/emailVerification");
+const forgotPassVerify=require('../helpers/forgotPassVerify')
 /* -------------------------------------------------------
     EXPRESSJS - How To Sell Project
 ------------------------------------------------------- */
 
 module.exports = {
   create: async (req, res) => {
-  
-    const {name, email, password} = req.body;
+    let passcode = Math.floor(Math.random() * 100000) + 2000;
+    const { name, email, password } = req.body;
     const user = await Admin.findOne({ email });
-    if ( !name || !email || !password) {
-      res.status(400).send({ error: true, message: "Please fill the required credentials." });
+    const upName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
+    if (!name || !email || !password) {
+      res
+        .status(400)
+        .send({
+          error: true,
+          message: "Please fill the required credentials.",
+        });
       return;
     }
- 
-    if (user) {
-        res.status(400).send({ error: true, message: "The email address is already in use." });
-        return;
-      }
 
-   
-      const newUser = await Admin.create({name, email, password:passwordEncrypt(password)});
-      const tokenData = "Token " + passwordEncrypt(newUser._id + `${new Date()}`);
-      await Token.create({ userId: newUser._id, token: tokenData });
+    if (user) {
+      res
+        .status(400)
+        .send({ error: true, message: "The email address is already in use." });
+      return;
+    }
+
+    const newUser = await Admin.create({
+      name,
+      email,
+      password: passwordEncrypt(password),
+      owner: false,
+      authorization: false,
+    });
+    const tokenData = "Token " + passwordEncrypt(newUser._id + `${new Date()}`);
+    await Token.create({ userId: newUser._id, token: tokenData });
+    sendVerificationEmail(email, passcode, upName);
 
     res.send({
       error: false,
       result: newUser,
       Token: tokenData,
-    })
-},
-
-
-
-update: async (req, res) => {
-    const updateData = req.body;
-
-    const updatedUser = await Admin.findOneAndUpdate(
-      { _id: req.user },
-      updateData,
-      { new: true, runValidators: true }
-    );
-    res.status(202).send({
-      error: false,
-      result: updatedUser,
+      passcode,
     });
   },
 
+  update: async (req, res) => {
+    // {
+    //   "userId":"670313c31a89b7acf576deeb",
+    //   "updateData":{"authorization":"true"}
+    //   }
 
+    const { updateData, userId } = req.body;
+    const user = req.user;
+    const isAdmin = await Admin.findOne({ _id: user });
+    console.log(isAdmin.owner);
+    if (isAdmin.owner) {
+      const updatedUser = await Admin.findOneAndUpdate(
+        { _id: userId },
+        updateData,
+        { new: true, runValidators: true }
+      );
+      res.status(202).send({
+        error: false,
+        result: updatedUser,
+      });
+    } else {
+      res.status(202).send({
+        error: false,
+        message: "Only Owner can update the data!",
+      });
+    }
+  },
 
   updatePassword: async (req, res) => {
     const password = req.body.password;
@@ -62,13 +90,81 @@ update: async (req, res) => {
         runValidators: true,
       }
     );
-    
+
     const newData = await Admin.findOne({ _id: req.user });
     res.status(202).send({
       error: false,
       message: "Password has changed successfully.",
-      newData
+      newData,
     });
   },
 
-}
+  delete: async (req, res) => {
+    const { userId } = req.body;
+    const data = await Admin.deleteOne({ _id: userId });
+
+    if (data.deletedCount >= 1) {
+      res.send({
+        message: "Successfully deleted",
+      });
+    } else {
+      res.send({
+        message: "There is no recording to be deleted.",
+      });
+    }
+  },
+
+  forgotPass: async (req, res) => {
+    const { email } = req.body;
+    const user = await Admin.findOne({ email });
+    const upName =user?.name.charAt(0).toUpperCase() + user?.name.slice(1).toLowerCase();
+
+    if (!user) {
+      res.status(400).send({ error: true, message: "User not found!" });
+      return;
+    } 
+
+    const tokenData = "Token " + passwordEncrypt(user._id + `${new Date()}`);
+    await Token.create({ userId: user._id, token: tokenData });
+
+    forgotPassVerify({ email, name: upName, userId: user._id });
+
+    res.status(201).send({
+      error: false,
+      Token: tokenData,
+      result: user,
+    });
+  },
+
+  updateForgottenPassword: async (req, res) => {
+    const password = req.body.password;
+    const {userId}=req.params
+
+    await User.updateOne(
+      { _id: userId },
+      { password: password },
+      {
+        runValidators: true,
+      }
+    );
+    const newData = await Admin.findOne({ _id: req.user });
+
+    res.status(202).send({
+      error: false,
+      message: "Password has changed successfully.",
+      result: newData,
+    });
+  },
+
+
+
+  list: async (req, res) => {
+    const data = await req.getModelList(Admin);
+
+    res.status(200).send({
+      error: false,
+      count: data.length,
+      result: data,
+    });
+  },
+};
