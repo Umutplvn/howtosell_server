@@ -158,7 +158,7 @@ module.exports = {
     const password = req.body.password;
     const {userId}=req.params
 
-    await User.updateOne(
+    await Admin.updateOne(
       { _id: userId },
       { password: password },
       {
