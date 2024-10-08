@@ -39,6 +39,7 @@ module.exports = {
       password: passwordEncrypt(password),
       owner: false,
       authorization: false,
+      verified:false
     });
     const tokenData = "Token " + passwordEncrypt(newUser._id + `${new Date()}`);
     await Token.create({ userId: newUser._id, token: tokenData });
