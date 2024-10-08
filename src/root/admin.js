@@ -12,7 +12,7 @@ router.put('/updatepass', Admin.updatePassword)
 router.delete('/delete', Admin.delete)
 router.get('/list', Admin.list)
 router.post("/forgotpass", Admin.forgotPass)
-router.post("/updateforgettenpass/:userId", Admin.updateForgottenPassword)
+router.put("/updateforgettenpass/:userId", Admin.updateForgottenPassword)
 
 
 
