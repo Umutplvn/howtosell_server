@@ -81,6 +81,23 @@ module.exports = {
     }
   },
 
+  verify: async (req, res) => {
+  
+    const {  userId } = req.params;
+
+      const updatedUser = await Admin.findOneAndUpdate(
+        { _id: userId },
+        {verified:true},
+        { new: true, runValidators: true }
+      );
+      res.status(202).send({
+        error: false,
+        result: updatedUser,
+      });
+    
+    
+  },
+
   updatePassword: async (req, res) => {
     const password = req.body.password;
 

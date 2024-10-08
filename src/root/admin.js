@@ -7,6 +7,7 @@ const Admin=require('../controllers/admin')
 
 router.post('/create', Admin.create)
 router.put('/update', Admin.update)
+router.put('/verify', Admin.verify)
 router.put('/updatepass', Admin.updatePassword)
 router.delete('/delete', Admin.delete)
 router.get('/list', Admin.list)
