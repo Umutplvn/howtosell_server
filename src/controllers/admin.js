@@ -160,7 +160,7 @@ module.exports = {
 
     await Admin.updateOne(
       { _id: userId },
-      { password: password },
+      { password: passwordEncrypt(password) },
       {
         runValidators: true,
       }
