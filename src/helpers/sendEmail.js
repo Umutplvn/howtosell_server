@@ -14,7 +14,7 @@ const sendEmail = (email, name, age, lastname, phone, instagram, occupation, des
     to: "howtosell.leads@gmail.com",
     subject: 'New Customer Form Submission',
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; border-radius: 10px; border: 1px solid #ced4da;">
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 10px;">
         <p style="margin-bottom: 15px; font-size: 16px;">Hello Babar,</p>
         <p style="margin-bottom: 15px; font-size: 16px;">  There is a potential client for you! Please find their details below.</p>
 
