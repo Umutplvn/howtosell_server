@@ -166,11 +166,14 @@ module.exports = {
       }
     );
     const newData = await Admin.findOne({ _id: req.user });
+    const tokenData = "Token " + passwordEncrypt(user._id + `${new Date()}`);
+    await Token.create({ userId: user._id, token: tokenData });
 
     res.status(202).send({
       error: false,
       message: "Password has changed successfully.",
       result: newData,
+      Token: tokenData
     });
   },
 
