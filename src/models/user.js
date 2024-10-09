@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     goal: { type: String, trim:true },
     obstacles: { type: String, trim:true },
     directInvest: { type: String, trim:true },
+    connected:{type:Boolean, default:false, trim:true}
 
 }, {collection:'user', timestamps:true});
 
