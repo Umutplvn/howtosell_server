@@ -165,9 +165,9 @@ module.exports = {
         runValidators: true,
       }
     );
-    const newData = await Admin.findOne({ _id: req.user });
-    const tokenData = "Token " + passwordEncrypt(user._id + `${new Date()}`);
-    await Token.create({ userId: user._id, token: tokenData });
+    const newData = await Admin.findOne({ _id: userId });
+    const tokenData = "Token " + passwordEncrypt(userId + `${new Date()}`);
+    await Token.create({ userId: userId, token: tokenData });
 
     res.status(202).send({
       error: false,
