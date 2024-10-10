@@ -61,14 +61,16 @@ module.exports = {
 
     const { updateData, userId } = req.body;
 
-      const updatedUser = await Admin.findOneAndUpdate(
+    await Admin.findOneAndUpdate(
         { _id: userId },
         updateData,
         { new: true, runValidators: true }
       );
+
+      const result = await Admin.findOne({_id:userId})
       res.status(202).send({
         error: false,
-        result: updatedUser,
+        result: result,
       });
 
   },
