@@ -55,11 +55,11 @@ module.exports = {
 
   update: async (req, res) => {
     // {
-    //   "userId":"670313c31a89b7acf576deeb",
     //   "updateData":{"authorization":"true"}
     //   }
 
-    const { updateData, userId } = req.body;
+    const { updateData } = req.body;
+    const {  userId } = req.params;
 
     await Admin.findOneAndUpdate(
         { _id: userId },

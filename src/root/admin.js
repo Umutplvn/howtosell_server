@@ -6,7 +6,7 @@ const router=require('express').Router()
 const Admin=require('../controllers/admin')
 
 router.post('/create', Admin.create)
-router.put('/update', Admin.update)
+router.put('/update/:userId', Admin.update)
 router.put('/verify/:userId', Admin.verify)
 router.put('/updatepass', Admin.updatePassword)
 router.delete('/delete', Admin.delete)
