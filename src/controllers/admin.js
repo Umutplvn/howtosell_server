@@ -58,7 +58,7 @@ module.exports = {
     const { userId } = req.params;
   
     if (updateData.password) {
-      updateData.password = passwordEncrypt(updateData.password)
+      updateData.password = passwordEncrypt(updateData.password); 
     }
   
     try {
