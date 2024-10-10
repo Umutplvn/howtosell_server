@@ -60,10 +60,7 @@ module.exports = {
     //   }
 
     const { updateData, userId } = req.body;
-    const user = req.user;
-    const isAdmin = await Admin.findOne({ _id: user });
 
-    if (isAdmin.owner) {
       const updatedUser = await Admin.findOneAndUpdate(
         { _id: userId },
         updateData,
@@ -73,12 +70,7 @@ module.exports = {
         error: false,
         result: updatedUser,
       });
-    } else {
-      res.status(202).send({
-        error: false,
-        message: "Only Owner can update the data!",
-      });
-    }
+
   },
 
   verify: async (req, res) => {
