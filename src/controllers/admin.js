@@ -54,25 +54,31 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    // {
-    //   "updateData":{"authorization":"true"}
-    //   }
-
     const { updateData } = req.body;
-    const {  userId } = req.params;
-
-    await Admin.findOneAndUpdate(
+    const { userId } = req.params;
+  
+    if (updateData.password) {
+      updateData.password = passwordEncrypt(updateData.password)
+    }
+  
+    try {
+      const result = await Admin.findOneAndUpdate(
         { _id: userId },
         updateData,
         { new: true, runValidators: true }
       );
-
-      const result = await Admin.findOne({_id:userId})
+  
       res.send({
         error: false,
         result
       });
-
+    } catch (error) {
+      console.error("Update failed:", error);
+      res.status(500).send({
+        error: true,
+        message: "Failed!"
+      });
+    }
   },
 
   verify: async (req, res) => {
