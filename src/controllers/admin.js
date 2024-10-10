@@ -68,9 +68,9 @@ module.exports = {
       );
 
       const result = await Admin.findOne({_id:userId})
-      res.status(202).send({
+      res.send({
         error: false,
-        result: result,
+        result
       });
 
   },
