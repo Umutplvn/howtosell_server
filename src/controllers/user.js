@@ -23,12 +23,10 @@ module.exports = {
 },
 
 update:async(req,res)=>{
-// "userId":"670200baf6351da6f0ba538a",
-// "updateData":{"name":"deneme"}}
 
-  const {updateData, userId} = req.body;
-  console.log('Incoming update data:', updateData);
-  console.log('User ID:', userId);
+  const {updateData} = req.body;
+  const {userId}=req.params;
+
   const updatedUser = await User.findOneAndUpdate(
     { _id: userId },
     updateData,
