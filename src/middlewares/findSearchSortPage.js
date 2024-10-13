@@ -38,7 +38,8 @@ module.exports = (req, res, next) => {
     // RUN:
     req.getModelList = async (Model, populate = null) => {
 
-        return await Model.find(search).sort(sort).skip(skip).limit(limit).populate(populate)
+        // return await Model.find(search).sort(sort).skip(skip).limit(limit).populate(populate)
+        return await Model.find(search).sort(sort).skip(skip).populate(populate)
     }
 
     // Details:
@@ -48,19 +49,19 @@ module.exports = (req, res, next) => {
             search,
             sort,
             skip,
-            limit,
+            // limit,
             page,
             pages: {
                 previous: (page > 0 ? page : false),
                 current: page + 1,
                 next: page + 2,
-                total: Math.ceil(data.length / limit)
+                // total: Math.ceil(data.length / limit)
             },
             totalRecords: data.length,
         }
         details.pages.next = (details.pages.next > details.pages.total ? false : details.pages.next)
-        if (details.totalRecords <= limit) details.pages = false
-        return details
+        // if (details.totalRecords <= limit) details.pages = false
+        // return details
     }
 
     next()
